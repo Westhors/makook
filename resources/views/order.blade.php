@@ -103,7 +103,7 @@
                 <div class="header-bottom header-sticky">
                     <!-- الشعار -->
                     <div class="logo">
-                        <a href="index.html">
+                        <a href="/">
                             <img src="{{ asset('assets/img/logo/logoTwo.png') }}" alt="الشعار"
                                 style="height:60px; width:auto; object-fit:contain;">
                         </a>

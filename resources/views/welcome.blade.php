@@ -47,7 +47,7 @@
                 <div class="header-bottom header-sticky">
                     <!-- الشعار -->
                     <div class="logo">
-                        <a href="index.html">
+                        <a href="/">
                             <img src="{{ asset('assets/img/logo/logoTwo.png') }}" alt="الشعار"
                                 style="height:60px; width:auto; object-fit:contain;">
                         </a>
@@ -57,9 +57,9 @@
                         <div class="main-menu f-right d-none d-lg-block">
                             <nav>
                                 <ul id="navigation">
-                                    <li><a href="index.html">الرئيسية</a></li>
+                                    <li><a href="/">الرئيسية</a></li>
                                     <li><a href="/order">اطلب الان</a></li>
-                                    <li><a href="#">الخدمات</a></li>
+                                    {{-- <li><a href="#">الخدمات</a></li>
                                     <li><a href="blog.html">المدونة</a>
                                         <ul class="submenu">
                                             <li><a href="blog.html">المدونة</a></li>
@@ -67,7 +67,7 @@
                                             <li><a href="elements.html">عناصر</a></li>
                                         </ul>
                                     </li>
-                                    <li><a href="contact.html">تواصل معنا</a></li>
+                                    <li><a href="contact.html">تواصل معنا</a></li> --}}
                                 </ul>
                             </nav>
                         </div>
@@ -347,7 +347,7 @@
                                 <div class="single-footer-caption mb-30">
                                     <!-- logo -->
                                     <div class="footer-logo mb-3">
-                                        <a href="index.html"
+                                        <a href="/"
                                             style="font-size: 3rem; font-weight: bold; color: #bfa67a; text-decoration: none;">Makook</a>
                                     </div>
                                     <div class="footer-tittle">
