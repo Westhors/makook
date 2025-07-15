@@ -51,6 +51,9 @@ class DesignResource extends Resource
 
 
             Forms\Components\TextInput::make('name_customer')->label('اسم العميل')->numeric(),
+            Forms\Components\TextInput::make('university_name')->label('اسم الجامعه')->numeric(),
+            Forms\Components\TextInput::make('department')->label('القسم')->numeric(),
+            Forms\Components\TextInput::make('batch_number')->label('رقم الدفعه')->numeric(),
             Forms\Components\TextInput::make('phone_number')->label(' رقم العميل')->numeric(),
             Forms\Components\TextInput::make('shoulder_width')->label('عرض الكتف')->numeric(),
             Forms\Components\TextInput::make('arm_length')->label('طول الذراع')->numeric(),
@@ -81,7 +84,7 @@ class DesignResource extends Resource
                 ->content(new HtmlString('
                     <div style="width: 100%; margin: 20px 0;">
                         <hr style="border-top: 2px solid #999; margin-bottom: 10px;">
-                        <h2 style="font-weight: bold; font-size: 1.1rem;">الروب</h2>
+                        <h2 style="font-weight: bold; font-size: 1.1rem;">القبعه</h2>
                     </div>
                 '))
                 ->columnSpanFull(),
@@ -103,15 +106,34 @@ class DesignResource extends Resource
                 ->imagePreviewHeight('100')
                 ->downloadable()
                 ->openable(),
+
+            Forms\Components\FileUpload::make('hood_direction_color_image')
+                ->label('مكان التطريز (صورة)')
+                ->directory('hood_directions')
+                ->image()
+                ->imagePreviewHeight('100')
+                ->downloadable()
+                ->openable(),
+
+
             Forms\Components\Select::make('hood_direction')->label('اتجاه التطريز')->options([
-                'right' => 'يمين',
-                'left' => 'يسار',
-                'back' => 'خلفي',
+                'top' => 'الاعلى',
+                'side' => 'الجانب',
+                'both' => 'كلاهما',
             ]),
             Forms\Components\TextInput::make('hood_text')->label('عبارة على القبعة'),
 
+
             Forms\Components\Placeholder::make('section_scarf')
-                ->content(new HtmlString('<h2>الوشاح</h2><hr>')),
+                ->content(new HtmlString('
+                    <div style="width: 100%; margin: 20px 0;">
+                        <hr style="border-top: 2px solid #999; margin-bottom: 10px;">
+                        <h2 style="font-weight: bold; font-size: 1.1rem;">الوشاح</h2>
+                    </div>
+                '))
+                ->columnSpanFull(),
+
+
 
             Forms\Components\Select::make('scarf_id')->relationship('scarf', 'name')->label('الوشاح الجاهز'),
             Forms\Components\Placeholder::make('scarf_image')
@@ -132,19 +154,44 @@ class DesignResource extends Resource
                 ->downloadable()
                 ->openable(),
             Forms\Components\Textarea::make('scarf_text')->label('عبارات على الوشاح'),
-            Forms\Components\Select::make('scarf_position')->label('مكان العبارات')->options([
-                'right' => 'الجهة اليمنى',
-                'left' => 'الجهة اليسرى',
-                'back' => 'الخلفية',
-            ]),
 
+            Forms\Components\CheckboxList::make('scarf_embroidery')
+                ->label('التطريز على الوشاح')
+                ->options([
+                    'right' => 'الجهة اليمنى',
+                    'left' => 'الجهة اليسرى',
+                    'back' => 'الخلفية',
+                ]),
 
+            Forms\Components\FileUpload::make('scarf_embroidery_image_right')
+                ->label('صورة تطريز الجهة اليمنى')
+                ->directory('scarf_embroidery_images')
+                ->image()
+                ->imagePreviewHeight('100')
+                ->downloadable()
+                ->openable(),
+
+            Forms\Components\FileUpload::make('scarf_embroidery_image_left')
+                ->label('صورة تطريز الجهة اليسرى')
+                ->directory('scarf_embroidery_images')
+                ->image()
+                ->imagePreviewHeight('100')
+                ->downloadable()
+                ->openable(),
+
+            Forms\Components\FileUpload::make('scarf_embroidery_image_back')
+                ->label('صورة تطريز الخلفية')
+                ->directory('scarf_embroidery_images')
+                ->image()
+                ->imagePreviewHeight('100')
+                ->downloadable()
+                ->openable(),
 
             Forms\Components\Placeholder::make('section_price')
                 ->content(new HtmlString('
                     <div style="width: 100%; margin: 20px 0;">
                         <hr style="border-top: 2px solid #999; margin-bottom: 10px;">
-                        <h2 style="font-weight: bold; font-size: 1.1rem;">الروب</h2>
+                        <h2 style="font-weight: bold; font-size: 1.1rem;"></h2>
                     </div>
                 '))
                 ->columnSpanFull(),
@@ -158,8 +205,13 @@ class DesignResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('id')->label('#')->sortable(),
-                Tables\Columns\TextColumn::make('design_type')->label('النوع')->sortable(),
-                Tables\Columns\TextColumn::make('total_price')->label('السعر')->suffix(' ريال')->sortable(),
+                Tables\Columns\TextColumn::make('design_type')
+                    ->label('النوع')
+                    ->sortable()
+                    ->formatStateUsing(function ($state) {
+                        return $state === 'individual' ? 'تصميم فردي' : ($state === 'batch' ? 'تصميم للدفعة' : $state);
+                    }),
+                Tables\Columns\TextColumn::make('total_price')->label('السعر')->suffix(' دينار')->sortable(),
                 Tables\Columns\TextColumn::make('created_at')->label('تاريخ الطلب')->dateTime('Y-m-d H:i')->sortable(),
             ])
             ->filters([
@@ -184,7 +236,15 @@ class DesignResource extends Resource
                             ->when($data['min_price'], fn($q, $value) => $q->where('total_price', '>=', $value))
                             ->when($data['max_price'], fn($q, $value) => $q->where('total_price', '<=', $value));
                     }),
+
+                Tables\Filters\SelectFilter::make('design_type')
+                    ->label('نوع التصميم')
+                    ->options([
+                        'individual' => 'تصميم فردي',
+                        'batch' => 'تصميم للدفعة',
+                    ]),
             ])
+
             ->searchable()
             ->actions([
                 Tables\Actions\EditAction::make()->label('تعديل'),

@@ -114,7 +114,8 @@
 
         <table>
             <tr>
-                <td><strong>نوع التصميم:</strong> {{ $design->design_type === 'individual' ? 'تصميم فردي' : 'تصميم دفعة' }}</td>
+                <td><strong>نوع التصميم:</strong>
+                    {{ $design->design_type === 'individual' ? 'تصميم فردي' : 'تصميم دفعة' }}</td>
                 <td><strong>اللون:</strong> {{ $design->color }}</td>
             </tr>
             <tr>
@@ -135,7 +136,7 @@
             </tr>
             <tr>
                 <td colspan="2" class="total">
-                    السعر الإجمالي: {{ number_format($design->total_price, 2) }} ريال
+                    السعر الإجمالي: {{ number_format($design->total_price, 2) }} دينار
                 </td>
             </tr>
         </table>

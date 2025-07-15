@@ -30,7 +30,13 @@ class RobeResource extends Resource
                     ->maxLength(255),
 
                 Forms\Components\TextInput::make('price')
-                    ->label('السعر (ريال)')
+                    ->label('السعر الفردى (دينار)')
+                    ->required()
+                    ->numeric()
+                    ->minValue(0),
+
+                Forms\Components\TextInput::make('price_university')
+                    ->label('السعر للدفعه (دينار)')
                     ->required()
                     ->numeric()
                     ->minValue(0),
@@ -60,7 +66,12 @@ class RobeResource extends Resource
 
                 Tables\Columns\TextColumn::make('price')
                     ->label('السعر')
-                    ->suffix(' ريال')
+                    ->suffix(' دينار')
+                    ->sortable(),
+
+                Tables\Columns\TextColumn::make('price_university')
+                    ->label('السعر للدفعه (دينار)')
+                    ->suffix(' دينار')
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('created_at')
@@ -90,6 +101,17 @@ class RobeResource extends Resource
                         return $query
                             ->when($data['min_price'], fn($q, $value) => $q->where('price', '>=', $value))
                             ->when($data['max_price'], fn($q, $value) => $q->where('price', '<=', $value));
+                    }),
+                Tables\Filters\Filter::make('price_range_university')
+                    ->label('نطاق السعر الدفعه')
+                    ->form([
+                        Forms\Components\TextInput::make('min_price_university')->label('السعر من للدفعه')->numeric(),
+                        Forms\Components\TextInput::make('max_price_university')->label('السعر إلى للدفعه')->numeric(),
+                    ])
+                    ->query(function ($query, array $data) {
+                        return $query
+                            ->when($data['min_price_university'], fn($q, $value) => $q->where('price_university', '>=', $value))
+                            ->when($data['max_price_university'], fn($q, $value) => $q->where('price_university', '<=', $value));
                     }),
             ])
             ->actions([

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>طلب تصميم فردى |  تيلور تيمبلت</title>
+    <title>طلب تصميم دفعه |  تيلور تيمبلت</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
     <style>
         body {
@@ -56,7 +56,6 @@
     </style>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Tailor | Template</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="manifest" href="{{ asset('site.webmanifest') }}">
@@ -206,19 +205,38 @@
                     {{ session('success') }}
                 </div>
             @endif
+
             <div class="form-section">
-                <div class="form-title">تصميم فردي</div>
+                <div class="form-title">طلب دفعة</div>
                 <div class="row">
-                    <input type="hidden" value="individual" name="design_type" class="form-control" required>
+
+                    <input type="hidden" value="batch" name="design_type" class="form-control" required>
 
                     <div class="col-md-4 mb-3">
                         <label class="form-label">اسم العميل</label>
                         <input type="text" name="name_customer" class="form-control" required>
                     </div>
                     <div class="col-md-4 mb-3">
+                        <label class="form-label">اسم الجامعه</label>
+                        <input type="text" name="university_name" class="form-control" required>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">القسم</label>
+                        <input type="text" name="department" class="form-control" required>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label">رقم الدفعه</label>
+                        <input type="text" name="batch_number" class="form-control" required>
+                    </div>
+
+
+                    <div class="col-md-4 mb-3">
                         <label class="form-label">رقم العميل</label>
                         <input type="text" name="phone_number" class="form-control" required>
                     </div>
+
                     <div class="col-md-4 mb-3">
                         <label class="form-label">عرض الكتف</label>
                         <input type="number" name="shoulder_width" step="0.01" class="form-control" required>
@@ -230,10 +248,6 @@
                     <div class="col-md-4 mb-3">
                         <label class="form-label">الطول الكلي</label>
                         <input type="number" name="total_length" step="0.01" class="form-control" required>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <label class="form-label">لون الرداء (صورة)</label>
-                        <input type="file" name="color_image" class="form-control" required>
                     </div>
 
                 </div>
@@ -255,7 +269,7 @@
                                             class="img-fluid rounded mb-2"
                                             style="height:250px; width:100%; object-fit:cover;">
                                         <div>{{ $robe->name }}</div>
-                                        <small class="text-muted">{{ $robe->price }} دينار </small>
+                                        <small class="text-muted">{{ $robe->price_university }} دينار </small>
                                     </div>
                                 </label>
                             </div>
@@ -264,15 +278,6 @@
                 </div>
 
 
-
-                <!-- رفع صورة روب مخصص -->
-                <div class="mb-3">
-                    <label class="form-label">أو ارفع صورة روب مخصص</label>
-                    <input type="file" name="custom_robe_image" class="form-control" id="customRobeImage">
-                </div>
-
-                <!-- السعر اللي هيتبعت للباك اند -->
-                <input type="hidden" name="custom_robe_price" id="customRobePrice" value="0.00">
 
 
 
@@ -297,7 +302,7 @@
                                                 alt="{{ $hood->name }}" class="img-fluid rounded mb-2"
                                                 style="height:250px; width:100%; object-fit:cover;">
                                             <div>{{ $hood->name }}</div>
-                                            <small class="text-muted">{{ $hood->price }} دينار </small>
+                                            <small class="text-muted">{{ $hood->price_university }} دينار </small>
                                         </div>
                                     </label>
                                 </div>
@@ -307,16 +312,7 @@
                     </div>
                 </div>
 
-                <div class="mb-3">
-                    <label class="form-label">أو ارفع صورة قبعة مخصصة</label>
-                    <input type="file" name="custom_hood_image" class="form-control" id="customHoodImage">
-                </div>
-                <input type="hidden" name="custom_hood_price" id="customHoodPrice">
 
-                <div class=" mb-3">
-                    <label class="form-label">لون القبعة (صورة)</label>
-                    <input type="file" name="hood_color_image" class="form-control">
-                </div>
                 <div class="row mt-4">
 
 
@@ -365,20 +361,13 @@
                                             class="img-fluid rounded mb-2"
                                             style="height:250px; width:100%; object-fit:cover;">
                                         <div>{{ $scarf->name }}</div>
-                                        <small class="text-muted">{{ $scarf->price }} دينار </small>
+                                        <small class="text-muted">{{ $scarf->price_university }} دينار </small>
                                     </div>
                                 </label>
                             </div>
                         @endforeach
                     </div>
                 </div>
-
-
-                <div class="mb-3">
-                    <label class="form-label">أو ارفع صورة وشاح مخصص</label>
-                    <input type="file" name="custom_scarf_image" class="form-control" id="customScarfImage">
-                </div>
-                <input type="hidden" name="custom_scarf_price" id="customScarfPrice">
 
 
                 <div class="mb-3">
@@ -439,15 +428,12 @@
                 <h5>تفاصيل الأسعار:</h5>
 
                 <div><strong>سعر الروب:</strong> <span id="robePriceText">سيتم تحديد السعر بعد المراجعة</span></div>
-                <div><strong>سعر الروب المخصص:</strong> <span id="customRobePriceText">0.00 دينار</span></div>
                 <hr>
 
                 <div><strong>سعر القبعة:</strong> <span id="hoodPriceText">سيتم تحديد السعر بعد المراجعة</span></div>
-                <div><strong>سعر القبعة المخصصة:</strong> <span id="customHoodPriceText">0.00 دينار</span></div>
                 <hr>
 
                 <div><strong>سعر الوشاح:</strong> <span id="scarfPriceText">سيتم تحديد السعر بعد المراجعة</span></div>
-                <div><strong>سعر الوشاح المخصص:</strong> <span id="customScarfPriceText">0.00 دينار</span></div>
                 <hr>
 
                 <div><strong>سعر مكان تطريز القبعات:</strong> <span id="hoodDirectionPriceText">0.00 دينار</span></div>
@@ -527,94 +513,7 @@
         });
     });
 
-    // إعدادات لرفع صورة الروب المخصص
-    const customRobeImageInput = document.getElementById('customRobeImage');
-    const pond = FilePond.create(customRobeImageInput, {
-        acceptedFileTypes: ['image/*'],
-        allowMultiple: false,
-        imagePreviewHeight: 320,
-        labelIdle: `🚀 اسحب الصورة هنا أو اضغط للرفع`,
-        storeAsFile: true,
-    });
 
-    pond.on('addfile', (error, file) => {
-        if (!error) {
-            customRobePrice = (minRobePrice * 1.25);
-            document.getElementById('customRobePriceText').textContent = customRobePrice.toFixed(2) + ' دينار';
-            document.getElementById('customRobePrice').value = customRobePrice.toFixed(2);
-
-            updatePrice(); // تحديث السعر الإجمالي
-        }
-    });
-
-    // عند إزالة الصورة
-    pond.on('removefile', () => {
-        customRobePrice = 0;
-        document.getElementById('customRobePriceText').textContent = '0.00 دينار';
-        document.getElementById('customRobePrice').value = '';
-
-        updatePrice(); // تحديث السعر الإجمالي
-    });
-
-
-
-    // إعدادات لرفع صورة القبعة المخصصة
-    const customHoodImageInput = document.getElementById('customHoodImage');
-    const customHoodPond = FilePond.create(customHoodImageInput, {
-        acceptedFileTypes: ['image/*'],
-        allowMultiple: false,
-        imagePreviewHeight: 320,
-        labelIdle: `🚀 اسحب الصورة هنا أو اضغط للرفع`,
-        storeAsFile: true,
-    });
-
-    // لما ترفع صورة قبعة مخصصة
-    customHoodPond.on('addfile', () => {
-        const minHoodPrice = Math.min(...Object.values(hoodPrices));
-        const customHoodPrice = (minHoodPrice * 1.25).toFixed(2);
-
-        document.getElementById('customHoodPrice').value = customHoodPrice;
-        document.getElementById('customHoodPriceText').textContent = customHoodPrice + ' دينار';
-
-        updatePrice();
-    });
-
-    // لما تشيل الصورة
-    customHoodPond.on('removefile', () => {
-        document.getElementById('customHoodPrice').value = '';
-        document.getElementById('customHoodPriceText').textContent = '0.00 دينار';
-
-        updatePrice();
-    });
-
-
-    const customScarfImageInput = document.getElementById('customScarfImage');
-    const customScarfPond = FilePond.create(customScarfImageInput, {
-        acceptedFileTypes: ['image/*'],
-        allowMultiple: false,
-        imagePreviewHeight: 320,
-        labelIdle: `🚀 اسحب الصورة هنا أو اضغط للرفع`,
-        storeAsFile: true,
-    });
-
-    // عند رفع صورة وشاح مخصص
-    customScarfPond.on('addfile', () => {
-        const minScarfPrice = Math.min(...Object.values(scarfPrices));
-        const customScarfPrice = (minScarfPrice * 1.25).toFixed(2);
-
-        document.getElementById('customScarfPrice').value = customScarfPrice;
-        document.getElementById('customScarfPriceText').textContent = customScarfPrice + ' دينار';
-
-        updatePrice();
-    });
-
-    // عند إزالة الصورة
-    customScarfPond.on('removefile', () => {
-        document.getElementById('customScarfPrice').value = '';
-        document.getElementById('customScarfPriceText').textContent = '0.00 دينار';
-
-        updatePrice();
-    });
 
     document.addEventListener('DOMContentLoaded', function() {
         updatePrice();
@@ -694,20 +593,6 @@
         scarfBackEmbroideryPriceText.innerText = scarfBackEmbroideryPrice.toFixed(2) + ' دينار';
         total += scarfBackEmbroideryPrice;
 
-        // سعر الروب المخصص
-        const customRobePriceInput = parseFloat(document.getElementById('customRobePrice').value) || 0;
-        total += customRobePriceInput;
-        document.getElementById('customRobePriceText').textContent = customRobePriceInput.toFixed(2) + ' دينار';
-
-        // سعر القبعة المخصصة
-        const customHoodPriceInput = parseFloat(document.getElementById('customHoodPrice').value) || 0;
-        total += customHoodPriceInput;
-        document.getElementById('customHoodPriceText').textContent = customHoodPriceInput.toFixed(2) + ' دينار';
-
-        // سعر الوشاح المخصص
-        const customScarfPriceInput = parseFloat(document.getElementById('customScarfPrice').value) || 0;
-        total += customScarfPriceInput;
-        document.getElementById('customScarfPriceText').textContent = customScarfPriceInput.toFixed(2) + ' دينار';
 
         document.getElementById('totalPrice').innerText = total.toFixed(2);
     }

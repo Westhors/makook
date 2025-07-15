@@ -10,6 +10,7 @@ Route::get('/', function () {
 })->name('home');
 
 Route::get('/order', [DesignController::class, 'create'])->name('design.apply');
+Route::get('/order-group', [DesignController::class, 'createGroubOrder'])->name('order.group');
 Route::post('/order', [DesignController::class, 'store'])->name('design.store');
 
 

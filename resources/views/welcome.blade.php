@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Tailor | Template</title>
+    <title> تيلور تيمبلت </title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="manifest" href="{{ asset('site.webmanifest') }}">
@@ -348,7 +348,7 @@
                                     <!-- logo -->
                                     <div class="footer-logo mb-3">
                                         <a href="/"
-                                            style="font-size: 3rem; font-weight: bold; color: #bfa67a; text-decoration: none;">Makook</a>
+                                            style="font-size: 3rem; font-weight: bold; color: #bfa67a; text-decoration: none;"> تيلور تيمبلت </a>
                                     </div>
                                     <div class="footer-tittle">
                                         <div class="footer-pera">

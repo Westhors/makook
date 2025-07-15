@@ -18,6 +18,9 @@ return new class extends Migration
             $table->string('color_image')->nullable();
             $table->string('name_customer')->nullable();
             $table->string('phone_number')->nullable();
+            $table->string('university_name')->nullable();
+            $table->string('department')->nullable();
+            $table->string('batch_number')->nullable();
             $table->integer('total_length')->nullable();
             $table->integer('shoulder_width')->nullable();
             $table->integer('arm_length')->nullable();
@@ -31,7 +34,8 @@ return new class extends Migration
             $table->foreignId('hood_id')->nullable()->constrained('hoods')->nullOnDelete();
             $table->string('custom_hood_image')->nullable();
             $table->string('hood_color_image')->nullable();
-            $table->enum('hood_direction', ['right', 'left', 'back'])->nullable();
+            $table->string('hood_direction_color_image')->nullable();
+            $table->enum('hood_direction', ['top', 'side', 'both'])->nullable();
             $table->string('hood_text')->nullable();
 
             // الوشاح
@@ -40,7 +44,10 @@ return new class extends Migration
             $table->string('custom_scarf_image')->nullable();
             $table->string('scarf_logo')->nullable();
             $table->text('scarf_text')->nullable();
-            $table->enum('scarf_position', ['right', 'left', 'back'])->nullable();
+            $table->string('scarf_embroidery_image_right')->nullable();
+            $table->string('scarf_embroidery_image_left')->nullable();
+            $table->string('scarf_embroidery_image_back')->nullable();
+            $table->json('scarf_embroidery')->nullable();
 
             $table->decimal('total_price', 8, 2)->nullable();
             $table->timestamps();

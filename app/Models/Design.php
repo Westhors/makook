@@ -10,7 +10,10 @@ class Design extends Model
     use HasFactory;
 
     protected $guarded = ['id'];
-    
+    protected $casts = [
+        'scarf_embroidery' => 'array',
+    ];
+
     public function robe()
     {
         return $this->belongsTo(Robe::class);
